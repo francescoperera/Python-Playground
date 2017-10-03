@@ -26,6 +26,13 @@ after_script:
 # deploy master to production
 deploy:
   provider: script
-  script:  chmod +x deploy.sh
+  script:
+     - if [ "master" == "$TRAVIS_BRANCH" ] && ["$TRAVIS_EVENT_TYPE" == "push"]; then
+        echo "Deploying to GCS";
+       else
+        echo "$TRAVIS_BRANCH";
+        echo "$TRAVIS_EVENT_TYPE"; 
+        echo "No GCS deployment because build was not triggered by push to master";
+      fi  
   on:
     branch: master
