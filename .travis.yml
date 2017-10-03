@@ -11,7 +11,6 @@ before_install:
 after_script:
 - if [ "master" == "$TRAVIS_BRANCH" ] && ["$TRAVIS_EVENT_TYPE" = "push"]; then
     echo "Deploying to GCS";
-    #gsutil rsync -r dags gs://us-central1-composer-dev-8-b952bcfb-bucket/dags;
   else
     echo "No GCS deployment because build was not triggered by push to master";
   fi
