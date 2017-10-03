@@ -6,8 +6,8 @@ python:
 - '2.7'
 script:
 - echo "skip pytest";
-before_script;
-- chmod u+x deploy.sh
+before_script:
+- chmod u+x deploy.sh;
 before_install:
 - echo "no install dependencies";
 after_script:
@@ -15,7 +15,6 @@ after_script:
 - echo "$TRAVIS_EVENT_TYPE" 
 - if [ "master" == "$TRAVIS_BRANCH" ] && ["$TRAVIS_EVENT_TYPE" == "push"]; then echo "Deploying to GCS";else
   echo "No GCS deployment because build was not triggered by push to master";fi 
-
 after_success:
 - echo "$TRAVIS_BRANCH"
 - echo "$TRAVIS_EVENT_TYPE" 
