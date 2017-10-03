@@ -11,28 +11,21 @@ before_install:
 after_script:
 - echo "$TRAVIS_BRANCH";
 - echo "$TRAVIS_EVENT_TYPE"; 
-- if [ "master" == "$TRAVIS_BRANCH" ] && ["$TRAVIS_EVENT_TYPE" == "push"]; then
+- if [ "master" == "$TRAVIS_BRANCH" ];then
+    echo "correct branch";
+  fi
+- if [["$TRAVIS_EVENT_TYPE" == "push" ];then
+    echo "correct travis event";
+  fi
+- if [ "master" == "$TRAVIS_BRANCH" ] && ["$TRAVIS_EVENT_TYPE" == "push" ]; then
     echo "Deploying to GCS";
   else
     echo "$TRAVIS_BRANCH";
     echo "$TRAVIS_EVENT_TYPE"; 
     echo "No GCS deployment because build was not triggered by push to master";
   fi 
-# after_success:
-# - echo "$TRAVIS_BRANCH"
-# - echo "$TRAVIS_EVENT_TYPE" 
-# - if [ "master" == "$TRAVIS_BRANCH" ] && ["$TRAVIS_EVENT_TYPE" == "push"]; then echo "Deploying to GCS";else
-#   echo "No GCS deployment because build was not triggered by push to master";fi
-# deploy master to production
 deploy:
   provider: script
-  script:
-     - if [ "master" == "$TRAVIS_BRANCH" ] && ["$TRAVIS_EVENT_TYPE" == "push"]; then
-        echo "Deploying to GCS";
-       else
-        echo "$TRAVIS_BRANCH";
-        echo "$TRAVIS_EVENT_TYPE"; 
-        echo "No GCS deployment because build was not triggered by push to master";
-      fi  
+  script: chmod +x ./deploy.sh && ./deploy.sh 
   on:
     branch: master
