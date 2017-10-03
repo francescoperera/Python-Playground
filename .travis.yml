@@ -8,11 +8,20 @@ script:
 - echo "skip pytest";
 before_install:
 - echo "no install dependencies";
-after_script:
+after_success:
+- echo "$TRAVIS_BRANCH"
+- echo $TRAVIS_EVENT_TYPE" 
+- if [ "master" == "$TRAVIS_BRANCH" ] && ["$TRAVIS_EVENT_TYPE" == "push"]; then echo "Deploying to GCS";else
+  echo "No GCS deployment because build was not triggered by push to master";fi 
+  
+after_success:
+- echo "$TRAVIS_BRANCH"
+- echo $TRAVIS_EVENT_TYPE" 
 - if [ "master" == "$TRAVIS_BRANCH" ] && ["$TRAVIS_EVENT_TYPE" == "push"]; then echo "Deploying to GCS";else
   echo "No GCS deployment because build was not triggered by push to master";fi
 # deploy master to production
-- provider: script
-  script: "scripts/deploy.sh"
+deploy:
+  provider: script
+  script: "./deploy.sh"
   on:
     branch: master
