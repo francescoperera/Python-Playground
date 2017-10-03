@@ -5,7 +5,6 @@ cache:
 python:
 - '2.7'
 script:
-#- pytest tests
 - echo "skip pytest";
 before_install:
 - echo "no install dependencies";
