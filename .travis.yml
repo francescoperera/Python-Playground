@@ -1,0 +1,17 @@
+language: python
+cache:
+  directories:
+  - "$HOME/google-cloud-sdk/"
+python:
+- '2.7'
+script:
+#- pytest tests
+- echo "skip pytest";
+before_install:
+- echo "no install dependencies";
+after_script:
+- if [ "master" == "$TRAVIS_BRANCH" ] && ["$TRAVIS_EVENT_TYPE" = "push"]; then
+    echo "Deploying to GCS";
+  else
+    echo "No GCS deployment because build was not triggered by push to master";
+  fi
