@@ -5,10 +5,9 @@ cache:
 python:
 - '2.7'
 script:
-#- pytest tests
-- echo "skip pytest"
+- echo "skip pytest";
 before_install:
-- echo "no install dependencies"
+- echo "no install dependencies";
 after_script:
 - if [ "master" == "$TRAVIS_BRANCH" ] && ["$TRAVIS_EVENT_TYPE" = "push"]; then
     echo "Deploying to GCS";
