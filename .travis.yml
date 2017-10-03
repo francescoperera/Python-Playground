@@ -7,16 +7,8 @@ python:
 script:
 - echo "skip pytest";
 before_install:
-- echo "no install dependencies";
+- echo "installing dependencies";
 after_script:
-- echo "$TRAVIS_BRANCH";
-- echo "$TRAVIS_EVENT_TYPE"; 
-- if [ "master" == "$TRAVIS_BRANCH" ];then
-    echo "correct branch";
-  fi
-- if [ "$TRAVIS_EVENT_TYPE" == "push" ];then
-    echo "correct travis event";
-  fi
 - if [ "master" == "$TRAVIS_BRANCH" ] && [ "$TRAVIS_EVENT_TYPE" == "push" ]; then
     echo "Deploying to GCS";
   else
